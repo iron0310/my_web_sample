@@ -14,6 +14,7 @@
         body {
             font-family: Arial, sans-serif;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -26,6 +27,7 @@
 
         #wheel {
             margin-bottom: 20px;
+            position: relative;
         }
 
         button {
@@ -42,11 +44,31 @@
         button:hover {
             background-color: #218838;
         }
+
+        #result {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        /* 화살표 스타일 */
+        .arrow {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 30px solid red;
+        }
     </style>
 </head>
 <body>
+    <div id="result">결과: </div>
     <div class="container">
         <div id="wheel">
+            <div class="arrow"></div> <!-- 화살표 추가 -->
             <canvas id="wheelCanvas" width="500" height="500"></canvas>
         </div>
         <button id="spinButton">돌림판 돌리기</button>
@@ -56,6 +78,7 @@
         const canvas = document.getElementById("wheelCanvas");
         const ctx = canvas.getContext("2d");
         const spinButton = document.getElementById("spinButton");
+        const resultDisplay = document.getElementById("result");
 
         const sectors = [
             {color: "#FF6347", label: "1"},
@@ -111,7 +134,7 @@
                 if (spinSpeed <= 0) {
                     isSpinning = false;
                     clearTimeout(spinTimeout);
-                    alertWinner();
+                    displayWinner();
                 } else {
                     drawRotatedWheel();
                     spinTimeout = requestAnimationFrame(animateSpin);
@@ -131,10 +154,13 @@
             ctx.restore();
         }
 
-        function alertWinner() {
+        function displayWinner() {
+            // 회전 후 멈춘 위치에 따른 결과 계산
             const winnerIndex = Math.floor((totalSectors - (rotation % (2 * Math.PI)) / anglePerSector)) % totalSectors;
             const winner = sectors[winnerIndex].label;
-            alert(`당첨: ${winner}`);
+            
+            // 결과를 상단에 표시
+            resultDisplay.innerHTML = `결과: ${winner}`;
         }
 
         spinButton.addEventListener("click", spinWheel);
@@ -143,5 +169,3 @@
     </script>
 </body>
 </html>
-
-
