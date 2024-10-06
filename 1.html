@@ -50,17 +50,17 @@
             margin-bottom: 20px;
         }
 
-        /* 화살표 스타일 */
+        /* 오른쪽을 가리키는 화살표 스타일 */
         .arrow {
             position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
+            top: 50%;
+            right: -30px; /* 캔버스 바깥으로 살짝 이동 */
+            transform: translateY(-50%) rotate(180deg); /* 중앙에 맞추고, 오른쪽을 향하게 회전 */
             width: 0;
             height: 0;
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-bottom: 30px solid red;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            border-left: 30px solid red; /* 화살표 모양 */
         }
     </style>
 </head>
