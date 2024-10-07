@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Trollface with Centered Moving Eyes and Nose</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #008080;
+        }
+
+        .trollface {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            background: #f0f0f0;
+            border: 5px solid black;
+            border-radius: 50%;
+            box-shadow: -10px 10px 0 black;
+        }
+
+        .eye {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            border-radius: 50%;
+            border: 3px solid black;
+        }
+
+        .eye.left {
+            top: 50px;
+            left: 40px;
+        }
+
+        .eye.right {
+            top: 50px;
+            right: 40px;
+        }
+
+        .pupil {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background-color: black;
+            border-radius: 50%;
+            transition: transform 0.1s; /* 부드러운 이동 효과 */
+            left: 50%; /* 중앙 정렬 */
+            top: 50%; /* 중앙 정렬 */
+            transform: translate(-50%, -50%); /* 중앙 위치 조정 */
+        }
+
+        .mouth {
+            position: absolute;
+            width: 120px;
+            height: 60px;
+            background-color: white;
+            border-bottom: 5px solid black;
+            border-radius: 0 0 70px 70px;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* 코 추가 스타일 */
+        .nose {
+            position: absolute;
+            width: 30px;
+            height: 20px;
+            background-color: #f0f0f0;
+            border: 3px solid black;
+            border-radius: 15px;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+    </style>
+</head>
+<body>
+
+<div class="trollface">
+    <div class="eye left">
+        <div class="pupil" id="leftPupil"></div>
+    </div>
+    <div class="eye right">
+        <div class="pupil" id="rightPupil"></div>
+    </div>
+    <div class="mouth"></div>
+    <div class="nose"></div>
+</div>
+
+<script>
+    const leftEye = document.querySelector('.eye.left');
+    const rightEye = document.querySelector('.eye.right');
+    const leftPupil = document.getElementById('leftPupil');
+    const rightPupil = document.getElementById('rightPupil');
+
+    document.addEventListener('mousemove', (event) => {
+        const eyeRect = leftEye.getBoundingClientRect();
+        const eyeCenterX = eyeRect.left + eyeRect.width / 2;
+        const eyeCenterY = eyeRect.top + eyeRect.height / 2;
+        
+        const angle = Math.atan2(event.clientY - eyeCenterY, event.clientX - eyeCenterX);
+        
+        const pupilX = Math.cos(angle) * 8; // 눈동자의 이동 범위
+        const pupilY = Math.sin(angle) * 8; // 눈동자의 이동 범위
+
+        leftPupil.style.transform = `translate(-50%, -50%) translate(${pupilX}px, ${pupilY}px)`; // 중앙 정렬 유지
+
+        const rightEyeRect = rightEye.getBoundingClientRect();
+        const rightEyeCenterX = rightEyeRect.left + rightEyeRect.width / 2;
+        const rightEyeCenterY = rightEyeRect.top + rightEyeRect.height / 2;
+
+        const rightAngle = Math.atan2(event.clientY - rightEyeCenterY, event.clientX - rightEyeCenterX);
+        
+        const rightPupilX = Math.cos(rightAngle) * 8; // 눈동자의 이동 범위
+        const rightPupilY = Math.sin(rightAngle) * 8; // 눈동자의 이동 범위
+
+        rightPupil.style.transform = `translate(-50%, -50%) translate(${rightPupilX}px, ${rightPupilY}px)`; // 중앙 정렬 유지
+    });
+</script>
+
+</body>
+</html>
