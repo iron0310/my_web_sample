@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Randomly Rotating 3D Sphere</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body, html {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #282c34;
+        }
+        .scene {
+            width: 300px;
+            height: 300px;
+            perspective: 1000px;
+        }
+        .sphere {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transform: rotateX(0deg) rotateY(0deg);
+            transition: transform 2s;
+        }
+        .circle {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background-color: rgba(15, 3, 3, 0.8);
+        }
+        .circle:nth-child(1) { width: 40px; height: 40px; transform: translate(-50%, -50%) translateZ(100px); border: 4px solid rgb(249, 3, 3); }
+        .circle:nth-child(2) { width: 80px; height: 80px; transform: translate(-50%, -50%) translateZ(80px); border: 4px solid rgb(236, 102, 7); }
+        .circle:nth-child(3) { width: 120px; height: 120px; transform: translate(-50%, -50%) translateZ(60px); border: 4px solid rgb(226, 246, 8); }
+        .circle:nth-child(4) { width: 150px; height: 150px; transform: translate(-50%, -50%) translateZ(40px); border: 4px solid rgb(107, 240, 6); }
+        .circle:nth-child(5) { width: 180px; height: 180px; transform: translate(-50%, -50%) translateZ(20px); border: 4px solid rgb(5, 209, 240); }
+        .circle:nth-child(6) { width: 210px; height: 210px; transform: translate(-50%, -50%) translateZ(0px); border: 4px solid rgb(3, 60, 245); }
+        .circle:nth-child(7) { width: 180px; height: 180px; transform: translate(-50%, -50%) translateZ(-20px); border: 4px solid rgb(142, 9, 243); }
+        .circle:nth-child(8) { width: 150px; height: 150px; transform: translate(-50%, -50%) translateZ(-40px); border: 4px solid rgb(241, 4, 210); }
+        .circle:nth-child(9) { width: 120px; height: 120px; transform: translate(-50%, -50%) translateZ(-60px); border: 4px solid rgb(244, 5, 81); }
+        .circle:nth-child(10) { width: 80px; height: 80px; transform: translate(-50%, -50%) translateZ(-80px); border: 4px solid rgb(242, 4, 12); }
+        .circle:nth-child(11) { width: 40px; height: 40px; transform: translate(-50%, -50%) translateZ(-100px); border: 4px solid rgb(3, 247, 194); }
+    </style>
+</head>
+<body>
+    <div class="scene">
+        <div class="sphere" id="sphere">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+        </div>
+    </div>
+
+    <script>
+        const sphere = document.getElementById('sphere');
+        let rotationX = 0, rotationY = 0;
+
+        // 무작위 각도를 생성하는 함수
+        function getRandomAngle() {
+            return Math.random() * 360; // 0부터 360도까지의 무작위 각도 생성
+        }
+
+        // 구체의 회전을 무작위로 변경하는 함수
+        function rotateRandomly() {
+            rotationX += getRandomAngle();  // 무작위로 X축 각도를 변경
+            rotationY += getRandomAngle();  // 무작위로 Y축 각도를 변경
+            sphere.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg)`;
+        }
+
+        // 1초마다 무작위 회전
+        setInterval(rotateRandomly, 1000);
+    </script>
+</body>
+</html>
