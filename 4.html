@@ -3,56 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>목탁 치기</title>
+    <title>WOoooden FIshhh</title>
     <style>
         body {
             text-align: center;
             background-color: #f5f5dc;
-        }
-        .container {
-            position: relative;
-            display: inline-block;
-            margin-top: 50px;
-        }
-        .moktak {
-            width: 150px;
-            transition: transform 0.1s ease-in-out;
-        }
-        .stick {
-            position: absolute;
-            width: 100px;
-            top: 30px;
-            left: 50px;
-            transform-origin: right center;
-            transition: transform 0.1s ease-in-out;
-        }
+        
     </style>
 </head>
 <body>
-    <h1>목탁을 클릭하세요</h1>
-    <div class="container" onclick="hitMoktak()">
-        <img src="moktak.png" alt="목탁" class="moktak" id="moktak">
-        <img src="stick.png" alt="막대기" class="stick" id="stick">
-    </div>
-    <audio id="moktakSound" src="moktak.mp3"></audio>
+    <h1>Wooden Fish</h1>
+    
+    
     <script>
-        function hitMoktak() {
-            const moktak = document.getElementById("moktak");
-            const stick = document.getElementById("stick");
-            const sound = document.getElementById("moktakSound");
-            
-            stick.style.transform = "rotate(-30deg)";
-            setTimeout(() => {
-                stick.style.transform = "rotate(0deg)";
-            }, 100);
-            
-            moktak.style.transform = "scale(1.1)";
-            setTimeout(() => {
-                moktak.style.transform = "scale(1)";
-            }, 100);
-            
-            sound.play();
-        }
+        
     </script>
 </body>
 </html>
