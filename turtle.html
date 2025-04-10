@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turtle</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #0fb0dc;
+            position: relative;
+            overflow: hidden;
+        }
+        .turtle-container {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            animation: moveForward 2s infinite alternate ease-in-out;
+        }
+        .shell {
+            width: 120px;
+            height: 130px;
+            background: radial-gradient(circle at 50% 50%, #2e8b57, #006400);
+            border-radius: 50%;
+            position: absolute;
+            top: 80px;
+            left: 65px;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+        }
+        .head {
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle at 50% 50%, #6fa36f, #2e8b57);
+            border-radius: 50%;
+            position: absolute;
+            top: 40px;
+            left: 95px;
+            box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.2);
+            animation: movehead 0.6s infinite alternate ease-in-out;
+        }
+        .eye {
+            width: 10px;
+            height: 10px;
+            background-color: black;
+            border-radius: 50%;
+            position: absolute;
+            top: 15px;
+        }
+        .eye.left { left: 12px; }
+        .eye.right { right: 12px; }
+        .leg {
+            width: 35px;
+            height: 35px;
+            background: radial-gradient(circle at 50% 50%, #3c8c3c, #2e8b57);
+            border-radius: 50%;
+            position: absolute;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            animation: moveLegs 0.6s infinite alternate ease-in-out;
+        }
+        .leg.front-left { top: 100px; left: 50px; transform: rotate(-20deg); }
+        .leg.front-right { top: 100px; right: 50px; transform: rotate(20deg); }
+        .leg.back-left { bottom: 40px; left: 60px; transform: rotate(30deg); }
+        .leg.back-right { bottom: 40px; right: 60px; transform: rotate(-30deg); }
+        .tail {
+            width: 20px;
+            height: 40px;
+            background: radial-gradient(circle at 50% 50%, #2e8b57, #006400);
+            border-radius: 50%;
+            position: absolute;
+            bottom: 15px;
+            left: 115px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        @keyframes moveLegs {
+            0% { transform: translateY(6px); }
+        }
+        @keyframes movehead {
+            100% { transform: translateY(10px); }
+        }
+        @keyframes moveForward {
+            0% { transform: translateY(20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .fish_body {
+            position: relative;
+            width: 50px;
+            height: 100px;
+            background: linear-gradient(to bottom, #0dff00, #bc0974);
+            right: 90%; 
+            border-radius: 50%;
+            left: 90%;
+            top: -100px;
+            animation: dropBuilding 8s linear infinite;
+        }
+        @keyframes dropBuilding {
+            0% { top: -700px; }
+            100% { top: 90vh; }
+        }
+
+        .building {
+            position: relative;
+            width: 150px;
+            height: 200px;
+            background: linear-gradient(to bottom, #0f1975, #08433b);
+            right: 80%;
+            top: -100px;
+            animation: dropBuilding 8s linear infinite;
+        }
+        @keyframes dropBuilding1 {
+            0% { top: -500px; }
+            100% { top: 70vh; }
+        }
+    </style>
+</head>
+<body>
+    <div class="turtle-container">
+        <div class="building1"></div>
+        <div class="head">
+            <div class="eye left"></div>
+            <div class="eye right"></div>
+        </div>
+        <div class="leg front-left"></div>
+        <div class="leg front-right"></div>
+        <div class="leg back-left"></div>
+        <div class="leg back-right"></div>
+        <div class="tail"></div>
+        <div class="shell"></div>
+        <div class="building"></div>
+        <div class="fish_body"></div>
+        
+    </div>
+</body>
+</html>
