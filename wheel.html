@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>돌림판</title>
+    <title>Wheel</title>
     <style>
         * {
             margin: 0;
@@ -50,28 +50,28 @@
             margin-bottom: 20px;
         }
 
-        /* 오른쪽을 가리키는 화살표 스타일 */
+        
         .arrow {
             position: absolute;
             top: 50%;
-            right: -30px; /* 캔버스 바깥으로 살짝 이동 */
-            transform: translateY(-50%) rotate(180deg); /* 중앙에 맞추고, 오른쪽을 향하게 회전 */
+            right: -30px;
+            transform: translateY(-50%) rotate(180deg);
             width: 0;
             height: 0;
             border-top: 15px solid transparent;
             border-bottom: 15px solid transparent;
-            border-left: 30px solid red; /* 화살표 모양 */
+            border-left: 30px solid red;
         }
     </style>
 </head>
 <body>
-    <div id="result">결과: </div>
+    <div id="result">Result: </div>
     <div class="container">
         <div id="wheel">
-            <div class="arrow"></div> <!-- 화살표 추가 -->
+            <div class="arrow"></div>
             <canvas id="wheelCanvas" width="500" height="500"></canvas>
         </div>
-        <button id="spinButton">돌림판 돌리기</button>
+        <button id="spinButton">Roll</button>
     </div>
 
     <script>
@@ -101,14 +101,12 @@
                 const startAngle = i * anglePerSector;
                 const endAngle = startAngle + anglePerSector;
 
-                // 섹터 그리기
                 ctx.beginPath();
                 ctx.moveTo(canvas.width / 2, canvas.height / 2);
                 ctx.arc(canvas.width / 2, canvas.height / 2, canvas.width / 2, startAngle, endAngle, false);
                 ctx.fillStyle = sectors[i].color;
                 ctx.fill();
 
-                // 텍스트 추가
                 ctx.save();
                 ctx.translate(canvas.width / 2, canvas.height / 2);
                 ctx.rotate(startAngle + anglePerSector / 2);
@@ -124,12 +122,12 @@
             if (isSpinning) return;
 
             isSpinning = true;
-            let spinSpeed = Math.random() * 0.1 + 0.2; // 임의의 속도로 시작
-            let deceleration = 0.001; // 감속
+            let spinSpeed = Math.random() * 0.1 + 0.2; 
+            let deceleration = 0.001; 
 
             function animateSpin() {
-                rotation += spinSpeed; // 회전 증가
-                spinSpeed -= deceleration; // 속도 감소
+                rotation += spinSpeed; 
+                spinSpeed -= deceleration; 
 
                 if (spinSpeed <= 0) {
                     isSpinning = false;
@@ -147,20 +145,18 @@
         function drawRotatedWheel() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.save();
-            ctx.translate(canvas.width / 2, canvas.height / 2);  // 캔버스 중심으로 이동
-            ctx.rotate(rotation);  // 중앙에서 회전
-            ctx.translate(-canvas.width / 2, -canvas.height / 2);  // 원래 위치로 복귀
+            ctx.translate(canvas.width / 2, canvas.height / 2);  
+            ctx.rotate(rotation);  
+            ctx.translate(-canvas.width / 2, -canvas.height / 2);  
             drawWheel();
             ctx.restore();
         }
 
         function displayWinner() {
-            // 회전 후 멈춘 위치에 따른 결과 계산
             const winnerIndex = Math.floor((totalSectors - (rotation % (2 * Math.PI)) / anglePerSector)) % totalSectors;
             const winner = sectors[winnerIndex].label;
             
-            // 결과를 상단에 표시
-            resultDisplay.innerHTML = `결과: ${winner}`;
+            resultDisplay.innerHTML = `Result: ${winner}`;
         }
 
         spinButton.addEventListener("click", spinWheel);
