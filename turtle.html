@@ -14,20 +14,23 @@
             position: relative;
             overflow: hidden;
         }
-        .turtle-container {
-            position: relative;
-            width: 250px;
-            height: 250px;
-            animation: moveForward 2s infinite alternate ease-in-out;
-        }
+	.turtle {
+	    position: absolute;
+	    transition: transform 0.1s;
+	    
+	    width: 180px;
+	    height: 180px;
+	    border-radius: 50%;
+	    transition: left 0.1s linear, top 0.1s linear, transform 0.2s ease-in-out;
+	}
         .shell {
             width: 120px;
             height: 130px;
             background: radial-gradient(circle at 50% 50%, #2e8b57, #006400);
             border-radius: 50%;
             position: absolute;
-            top: 80px;
-            left: 65px;
+            top: 35px;
+            left: 30px;
             box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
         }
         .head {
@@ -36,8 +39,8 @@
             background: radial-gradient(circle at 50% 50%, #6fa36f, #2e8b57);
             border-radius: 50%;
             position: absolute;
-            top: 40px;
-            left: 95px;
+            top: 5px;
+            left: 60px;
             box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.2);
             animation: movehead 0.6s infinite alternate ease-in-out;
         }
@@ -47,7 +50,7 @@
             background-color: black;
             border-radius: 50%;
             position: absolute;
-            top: 15px;
+            top: 7px;
         }
         .eye.left { left: 12px; }
         .eye.right { right: 12px; }
@@ -60,18 +63,18 @@
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
             animation: moveLegs 0.6s infinite alternate ease-in-out;
         }
-        .leg.front-left { top: 100px; left: 50px; transform: rotate(-20deg); }
-        .leg.front-right { top: 100px; right: 50px; transform: rotate(20deg); }
-        .leg.back-left { bottom: 40px; left: 60px; transform: rotate(30deg); }
-        .leg.back-right { bottom: 40px; right: 60px; transform: rotate(-30deg); }
+        .leg.front-left { top: 65px; left: 15px; transform: rotate(-20deg); }
+        .leg.front-right { top: 65px; right: 15px; transform: rotate(20deg); }
+        .leg.back-left { bottom: 10px; left: 40px; transform: rotate(30deg); }
+        .leg.back-right { bottom: 10px; right: 40px; transform: rotate(-30deg); }
         .tail {
             width: 20px;
             height: 40px;
             background: radial-gradient(circle at 50% 50%, #2e8b57, #006400);
             border-radius: 50%;
             position: absolute;
-            bottom: 15px;
-            left: 115px;
+            bottom: 0px;
+            left: 80px;
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
         }
         @keyframes moveLegs {
@@ -85,40 +88,41 @@
             100% { transform: translateY(0px); }
         }
 
-        .fish_body {
-            position: relative;
-            width: 50px;
-            height: 100px;
-            background: linear-gradient(to bottom, #0dff00, #bc0974);
-            right: 90%; 
-            border-radius: 50%;
-            left: 90%;
-            top: -100px;
-            animation: dropBuilding 8s linear infinite;
-        }
-        @keyframes dropBuilding {
+        @keyframes dropBuilding1 {
             0% { top: -700px; }
             100% { top: 90vh; }
         }
 
-        .building {
-            position: relative;
+        .building1 {
+            position: absolute;
             width: 150px;
             height: 200px;
             background: linear-gradient(to bottom, #0f1975, #08433b);
-            right: 80%;
+            right: 20%;
+            top: 100px;
+            animation: dropBuilding1 5s linear infinite;
+        }
+
+	@keyframes dropBuilding2 {
+            0% { top: -700px; }
+            100% { top: 100vh; }
+        }
+
+        .building2 {
+            position: absolute;
+            width: 150px;
+            height: 200px;
+            background: linear-gradient(to bottom, #0f1975, #08433b);
+            left: 20%;
             top: -100px;
-            animation: dropBuilding 8s linear infinite;
+            animation: dropBuilding2 3s linear infinite;
         }
-        @keyframes dropBuilding1 {
-            0% { top: -500px; }
-            100% { top: 70vh; }
-        }
+       
     </style>
 </head>
 <body>
-    <div class="turtle-container">
-        <div class="building1"></div>
+    
+  	<div class="turtle" id="turtle">
         <div class="head">
             <div class="eye left"></div>
             <div class="eye right"></div>
@@ -129,7 +133,74 @@
         <div class="leg back-right"></div>
         <div class="tail"></div>
         <div class="shell"></div>
-        <div class="building"></div>
-    </div>
+	</div>
+
+	<div class="building1"></div>
+        <div class="building2"></div>
+    
 </body>
 </html>
+
+<script>
+let posX = window.innerWidth / 2 - 125; 
+let posY = window.innerHeight / 2 - 125;
+let currentRotation = 0;
+const turtle = document.getElementById('turtle');
+const speed = 10; 
+const b1 = document.querySelector('.building1');
+const b2 = document.querySelector('.building2');
+
+// collision detect logic
+function checkCollision() {
+    const tRect = turtle.getBoundingClientRect();
+    const b1Rect = b1.getBoundingClientRect();
+    const b2Rect = b2.getBoundingClientRect();
+
+    const hitB1 = !(tRect.right < b1Rect.left || tRect.left > b1Rect.right || tRect.bottom < b1Rect.top || tRect.top > b1Rect.bottom);
+    const hitB2 = !(tRect.right < b2Rect.left || tRect.left > b2Rect.right || tRect.bottom < b2Rect.top || tRect.top > b2Rect.bottom);
+
+    if (hitB1 || hitB2) {
+        gameOver();
+    }
+}
+
+// game over func
+function gameOver() {
+    alert("Game Over!");
+    window.close();
+    location.reload(); 
+}
+
+const gameLoop = setInterval(checkCollision, 10);
+
+// init location
+function updatePosition() {
+    turtle.style.left = posX + 'px';
+    turtle.style.top = posY + 'px';
+}
+updatePosition();
+
+// keyboard event listener
+window.addEventListener('keydown', (e) => {
+    if (e.repeat) return;
+    switch (e.key) {
+        case 'ArrowUp':
+            posY -= speed;
+            turtle.style.transform = 'rotate(0deg)'; 
+            break;
+        case 'ArrowDown':
+            posY += speed;
+            turtle.style.transform = 'rotate(180deg)';
+            break;
+        case 'ArrowLeft':
+            posX -= speed;
+            turtle.style.transform = 'rotate(-90deg)';
+            break;
+        case 'ArrowRight':
+            posX += speed;
+            turtle.style.transform = 'rotate(90deg)';
+            break;
+    }
+    updatePosition();
+});
+</script>
